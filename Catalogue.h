@@ -12,6 +12,8 @@
 
 //--------------------------------------------------- Interfaces utilisées
 #include "Trajet.h"
+#include <iostream>
+#include <fstream>
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -43,7 +45,8 @@ public:
     */
     void RechercheSimple(const char * undepart,const char * unearrivee);
 
-
+    void Charger();
+    void Sauvegarder();
 
 
 //-------------------------------------------- Constructeurs - destructeur

@@ -126,6 +126,14 @@ void Afficher(){
 
 }
 
+void Charger(){
+    cat.Charger();
+}
+
+
+void Sauvegarder(){
+    cat.Sauvegarder();
+}
 /***Fonction principale, point d'entrée du programme
 *
 */
@@ -140,15 +148,27 @@ int main(void)
         char* depart = new char[30];
         strcpy(depart, "");
         AjoutSimple(-1,depart);
-        delete depart;
+        delete [] depart;
         cat.Afficher();
-    } else if (lecture=='2') {
+    }
+    else if (lecture=='2') {
         AjoutComplexe();
-    } else if (lecture=='3') {
+    }
+    else if (lecture=='3') {
         Recherche();
-    } else if (lecture=='4') {
+    }
+    else if (lecture=='4') {
         Afficher();
     }
+    else if (lecture == '5')
+    {
+        Charger();
+    }
+    else if (lecture == '6')
+    {
+        Sauvgarder();
+    }
+
 
     Consignes();
     cin >>lecture;
