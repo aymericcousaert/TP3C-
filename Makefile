@@ -4,7 +4,7 @@ CPPFLAGS=-g -DMAP -Wall -ansi -pedantic -std=c++11
 INT= Catalogue.h Trajet.h TrajetSimple.h TrajetComplexe.h
 REAL=$(INT:.h=.cpp)
 BINAIRE=$(INT:.h=.o)
-EXE=executable
+EXE=run
 
 $(EXE): $(BINAIRE) main.o
 	$(ECHO) "Editions des liens, création de <$<>"

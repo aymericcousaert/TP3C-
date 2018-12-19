@@ -21,12 +21,14 @@ Catalogue cat = Catalogue(); //Le catalogue qui référence les trajets
 */
 void Consignes(){
     cout << '\n' << endl;;
-    cout << "Differentes commandes possible : " << endl;
-    cout << "0 -> Quitter le programme" << endl;
-    cout << "1 -> Ajouter un trajet simple" << endl;
-    cout << "2 -> Ajouter un trajet complexe" << endl;
-    cout << "3 -> Trouver trajet" << endl;
-    cout << "4 -> Afficher tous les trajets" << endl;
+    cout << "Saisir une commande : " << endl;
+    cout << "0 - Quitter le programme" << endl;
+    cout << "1 - Ajouter un trajet simple" << endl;
+    cout << "2 - Ajouter un trajet complexe" << endl;
+    cout << "3 - Trouver trajet" << endl;
+    cout << "4 - Afficher tous les trajets" << endl;
+    cout << "5 - Charger un fichier de trajets dans le catalogue" << endl;
+    cout << "6 - Sauvegarder le catalogue dans un fichier" << endl;
 }
 /***Permet la saisie de Trajets simples,
 * prend en paramètre si la fonction est utilisée dans le cadre d'un trajet complexe ou non
@@ -141,23 +143,23 @@ int main(void)
 {
   char lecture;
   Consignes(); //Affichage du menu
-  cin >>lecture;
+  cin >> lecture;
 
-  while(lecture!='0') {
-    if (lecture=='1') {
+  while(lecture != '0') {
+    if (lecture == '1') {
         char* depart = new char[30];
         strcpy(depart, "");
         AjoutSimple(-1,depart);
         delete [] depart;
         cat.Afficher();
     }
-    else if (lecture=='2') {
+    else if (lecture == '2') {
         AjoutComplexe();
     }
-    else if (lecture=='3') {
+    else if (lecture == '3') {
         Recherche();
     }
-    else if (lecture=='4') {
+    else if (lecture == '4') {
         Afficher();
     }
     else if (lecture == '5')
@@ -166,12 +168,10 @@ int main(void)
     }
     else if (lecture == '6')
     {
-        Sauvgarder();
+        Sauvegarder();
     }
-
-
     Consignes();
-    cin >>lecture;
+    cin >> lecture;
   }
   return 0;
 }
