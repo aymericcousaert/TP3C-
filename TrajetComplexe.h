@@ -60,7 +60,7 @@ public:
   *@param trajets Tableau des pointeurs des trajets qui composent ce trajet
   *@param nbTrajets le nombre de trajets qui composent le trajet complexe
   */
-  TrajetComplexe (Trajet ** trajets,int nbTrajets);
+  TrajetComplexe (Trajet** trajets,int nbTrajets);
 
   /***Destructeur de TrajetComplexe, détruit le tableau de trajets, mais pas les trajets !
   *
@@ -76,7 +76,7 @@ protected:
   //----------------------------------------------------- Attributs protégés
   /** Un tableau de pointeurs vers les trajets qui composent ce trajet complexe
   */
-  Trajet * * trajets;
+  Trajet** trajets;
 
   /** Le nombre de trajets qui composent le trajet complexe
   */

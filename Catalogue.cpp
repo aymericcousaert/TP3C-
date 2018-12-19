@@ -36,18 +36,18 @@ using namespace std;
 
 void Catalogue::Ajouter (Trajet & untrajet)
 {
-  //On réalloue dynamiquement le tableau pour ajouter un trajet
-  nbTrajets++;
-  Trajet ** nouveautab = new Trajet*[nbTrajets];
-	for(int i = 0; i < nbTrajets - 1; nouveautab[i] = trajet[i], i++); // On copie les anciens trajets
-	nouveautab[nbTrajets-1]= & untrajet;
-	delete [] trajet;
-  trajet = nouveautab;
+    // On réalloue dynamiquement le tableau pour ajouter un trajet
+    nbTrajets++;
+    Trajet ** nouveautab = new Trajet*[nbTrajets];
+    for (int i = 0; i < nbTrajets - 1; nouveautab[i] = trajet[i], i++); // On copie les anciens trajets
+    nouveautab[nbTrajets-1]= &untrajet;
+    delete [] trajet;
+    trajet = nouveautab;
 }
 
 void Catalogue::Afficher (){
     cout << "######### Catalogue ##########" << endl;
-    for(int i=0;i<nbTrajets;i++){
+    for(int i = 0 ; i < nbTrajets; i++){
 	     cout << i << ") ";
       trajet[i]->Afficher();
     }
@@ -102,6 +102,11 @@ void Catalogue::Charger() {
     string depart;
     string arrivee;
     int nbEtapes;
+    
+    extern TrajetSimple trajetSimple[1000]; // Le tableau qui stocke les trajets simples créés
+    extern int nbTrajetSimple; // Nombre de trajets simples créés
+    extern TrajetComplexe trajetComplexe[1000]; // Tableau qui stocke les trajets complexes créés
+    extern int nbTrajetComplexe;
 
     switch (typeSelection) {
         case 1:
@@ -113,64 +118,65 @@ void Catalogue::Charger() {
                 {
                     getline(fichier, ligne);
                     fichier >> departEtape >> arriveeEtape >> moyenEtape;
-                    Trajet* nouveau = new TrajetSimple(depart.c_str(),arrivee.c_str(),moyenEtape.c_str());
-                    Ajouter(*nouveau);
+                    trajetSimple[nbTrajetSimple] = TrajetSimple(depart.c_str(),arrivee.c_str(),moyenEtape.c_str());
+                    Ajouter(trajetSimple[nbTrajetSimple]);
+                    nbTrajetSimple++;
+                    
                 }
                 else
                 {
-                    
-                    // A faire
-                    /*
-                    TrajetSimple t3 = TrajetSimple("Lille","Paris","Train");
-                    TrajetSimple t4 = TrajetSimple("Paris","Nice","Avion");
-                    TrajetSimple t5 = TrajetSimple("Nice","Toulon","Pied");
-                    Trajet * tab[] = {&t3,&t4,&t5};
-                    TrajetComplexe t6 = TrajetComplexe(tab,3);
-                    Ajouter(t6);
-                    cout << "Ajout d'un trajet Complexe:" << endl;
-                    Afficher();
+                    Trajet** trajetCompose = new Trajet*[nbEtapes];
+                    for (int a = 0; a < nbEtapes; a++)
+                    {
+                        getline(fichier, ligne);
+                        fichier >> departEtape >> arriveeEtape >> moyenEtape;
+                        trajetSimple[nbTrajetSimple] = TrajetSimple(departEtape.c_str(),arriveeEtape.c_str(),moyenEtape.c_str());
+                        trajetCompose[a] = &trajetSimple[nbTrajetSimple];
+                        nbTrajetSimple++;
+                    }
+                    trajetComplexe[nbTrajetComplexe] = TrajetComplexe(trajetCompose,nbEtapes);
+                    Ajouter(trajetComplexe[nbTrajetComplexe]);
+                    nbTrajetComplexe++;
+                    delete[] trajetCompose;
+                }
+            }
+            break;
+        case 2:
+            cout << "Saisir le type de trajet (1 - Trajet Simple, 2 - Trajet Complexe)" << endl;
+            cin >> cas2;
+            for (int i = 0; i < nbTrajetACharger; i++)
+            {
+                fichier >> premierElement;
+                fichier >> simpleComplexe >> depart >> arrivee >> nbEtapes;
+                cout << simpleComplexe;
+                
+                if (simpleComplexe == "SIMPLE" && cas2 == 1)
+                {
+                    getline(fichier, ligne);
+                    fichier >> departEtape >> arriveeEtape >> moyenEtape;
+                    trajetSimple[nbTrajetSimple] = TrajetSimple(depart.c_str(),arrivee.c_str(),moyenEtape.c_str());
+                    Ajouter(trajetSimple[nbTrajetSimple]);
+                    nbTrajetSimple++;
+                }
+                else if (simpleComplexe == "COMPLEXE" && cas2 == 2)
+                {
                     
                     Trajet** trajetCompose = new Trajet*[nbEtapes];
                     for (int a = 0; a < nbEtapes; a++)
                     {
                         getline(fichier, ligne);
                         fichier >> departEtape >> arriveeEtape >> moyenEtape;
-                        trajetCompose[a] = new TrajetSimple(depart.c_str(),arrivee.c_str(),moyenEtape.c_str());
+                        trajetSimple[nbTrajetSimple] = TrajetSimple(departEtape.c_str(),arriveeEtape.c_str(),moyenEtape.c_str());
+                        trajetCompose[a] = &trajetSimple[nbTrajetSimple];
+                        nbTrajetSimple++;
                     }
-                    Trajet nouveau = TrajetComplexe(trajetCompose,nbEtapes);
-                    Ajouter(nouveau);
-                     */
-                    for (int a = 0; a < nbEtapes + 1; a++)
-                        getline(fichier, ligne);
-                    
-                }
-            }
-            break;
-        case 2:
-            cout << "Saisir le type de trajet (1 - Trajet Simple, 2 - Trajet Composé)" << endl;
-            cin >> cas2;
-            for (int i = 0; i < nbTrajetACharger; i++)
-            {
-                fichier >> premierElement;
-                fichier >> simpleComplexe >> depart >> arrivee >> nbEtapes;
-                if (simpleComplexe == "SIMPLE" && cas2 == 1)
-                {
-                    getline(fichier, ligne);
-                    fichier >> departEtape >> arriveeEtape >> moyenEtape;
-                    Trajet* nouveau = new TrajetSimple(depart.c_str(),arrivee.c_str(),moyenEtape.c_str());
-                    Ajouter(*nouveau);
-                }
-                else if (simpleComplexe == "COMPLEXE" && cas2 == 2)
-                {
-                    for (int a = 0; a < nbEtapes; a++)
-                    {
-                        // A faire
-                        for (int a = 0; a < nbEtapes + 1; a++)
-                            getline(fichier, ligne);
-                    }
+                    trajetComplexe[nbTrajetComplexe] = TrajetComplexe(trajetCompose,nbEtapes);
+                    Ajouter(trajetComplexe[nbTrajetComplexe]);
+                    nbTrajetComplexe++;
+                    delete[] trajetCompose;
                 }
                 else
-                    for (int a = 0; a < nbEtapes; a++)
+                    for (int a = 0; a < nbEtapes + 1; a++)
                         getline(fichier, ligne);
             }
             break;
@@ -187,36 +193,52 @@ void Catalogue::Charger() {
                 {
                     getline(fichier, ligne);
                     fichier >> departEtape >> arriveeEtape >> moyenEtape;
-                    Trajet* nouveau = new TrajetSimple(depart.c_str(),arrivee.c_str(),moyenEtape.c_str());
-                    Ajouter(*nouveau);
+                    trajetSimple[nbTrajetSimple] = TrajetSimple(depart.c_str(),arrivee.c_str(),moyenEtape.c_str());
+                    Ajouter(trajetSimple[nbTrajetSimple]);
+                    nbTrajetSimple++;
                 }
                 else if (cas3ville == depart && cas3 == 1 && simpleComplexe == "COMPLEXE")
                 {
+                    Trajet** trajetCompose = new Trajet*[nbEtapes];
                     for (int a = 0; a < nbEtapes; a++)
                     {
-                        // A faire
-                        for (int a = 0; a < nbEtapes + 1; a++)
-                            getline(fichier, ligne);
+                        getline(fichier, ligne);
+                        fichier >> departEtape >> arriveeEtape >> moyenEtape;
+                        trajetSimple[nbTrajetSimple] = TrajetSimple(departEtape.c_str(),arriveeEtape.c_str(),moyenEtape.c_str());
+                        trajetCompose[a] = &trajetSimple[nbTrajetSimple];
+                        nbTrajetSimple++;
                     }
+                    trajetComplexe[nbTrajetComplexe] = TrajetComplexe(trajetCompose,nbEtapes);
+                    Ajouter(trajetComplexe[nbTrajetComplexe]);
+                    nbTrajetComplexe++;
+                    delete[] trajetCompose;
                 }
                 else if (cas3ville == arrivee && cas3 == 2 && simpleComplexe == "SIMPLE")
                 {
                     getline(fichier, ligne);
                     fichier >> departEtape >> arriveeEtape >> moyenEtape;
-                    Trajet* nouveau = new TrajetSimple(depart.c_str(),arrivee.c_str(),moyenEtape.c_str());
-                    Ajouter(*nouveau);
+                    trajetSimple[nbTrajetSimple] = TrajetSimple(depart.c_str(),arrivee.c_str(),moyenEtape.c_str());
+                    Ajouter(trajetSimple[nbTrajetSimple]);
+                    nbTrajetSimple++;
                 }
                 else if (cas3ville == arrivee && cas3 == 2 && simpleComplexe == "COMPLEXE")
                 {
+                    Trajet** trajetCompose = new Trajet*[nbEtapes];
                     for (int a = 0; a < nbEtapes; a++)
                     {
-                        // A faire
-                        for (int a = 0; a < nbEtapes + 1; a++)
-                            getline(fichier, ligne);
+                        getline(fichier, ligne);
+                        fichier >> departEtape >> arriveeEtape >> moyenEtape;
+                        trajetSimple[nbTrajetSimple] = TrajetSimple(departEtape.c_str(),arriveeEtape.c_str(),moyenEtape.c_str());
+                        trajetCompose[a] = &trajetSimple[nbTrajetSimple];
+                        nbTrajetSimple++;
                     }
+                    trajetComplexe[nbTrajetComplexe] = TrajetComplexe(trajetCompose,nbEtapes);
+                    Ajouter(trajetComplexe[nbTrajetComplexe]);
+                    nbTrajetComplexe++;
+                    delete[] trajetCompose;
                 }
                 else
-                    for (int a = 0; a < nbEtapes; a++)
+                    for (int a = 0; a < nbEtapes + 1; a++)
                         getline(fichier, ligne);
             }
             break;
@@ -228,29 +250,44 @@ void Catalogue::Charger() {
                 cin >> cas4inf;
                 cout << "Saisir la borne supérieure de l'intervalle" << endl;
                 cin >> cas4sup;
-            } while ( !(cas4sup > cas4inf && cas4sup <= nbTrajetACharger && cas4inf > 0) );
+            } while ( !(cas4sup >= cas4inf && cas4sup <= nbTrajetACharger && cas4inf > 0) );
             // On se place en utilisateur et on commence à compter à partir de 1
-                
-            for (int i = cas4inf - 1; i < cas4sup; i++)
+            
+            
+            for (int i = 1; i <= nbTrajetACharger; i++)
             {
                 fichier >> premierElement;
                 fichier >> simpleComplexe >> depart >> arrivee >> nbEtapes;
-                if (simpleComplexe == "SIMPLE")
+                if (i >= cas4inf && i <= cas4sup)
                 {
-                    getline(fichier, ligne);
-                    fichier >> departEtape >> arriveeEtape >> moyenEtape;
-                    Trajet* nouveau = new TrajetSimple(depart.c_str(),arrivee.c_str(),moyenEtape.c_str());
-                    Ajouter(*nouveau);
-                }
-                else
-                {
-                    for (int a = 0; a < nbEtapes; a++)
+                    if (simpleComplexe == "SIMPLE")
                     {
-                        // A faire
-                        for (int a = 0; a < nbEtapes + 1; a++)
+                        getline(fichier, ligne);
+                        fichier >> departEtape >> arriveeEtape >> moyenEtape;
+                        trajetSimple[nbTrajetSimple] = TrajetSimple(depart.c_str(),arrivee.c_str(),moyenEtape.c_str());
+                        Ajouter(trajetSimple[nbTrajetSimple]);
+                        nbTrajetSimple++;
+                    }
+                    else
+                    {
+                        Trajet** trajetCompose = new Trajet*[nbEtapes];
+                        for (int a = 0; a < nbEtapes; a++)
+                        {
                             getline(fichier, ligne);
+                            fichier >> departEtape >> arriveeEtape >> moyenEtape;
+                            trajetSimple[nbTrajetSimple] = TrajetSimple(departEtape.c_str(),arriveeEtape.c_str(),moyenEtape.c_str());
+                            trajetCompose[a] = &trajetSimple[nbTrajetSimple];
+                            nbTrajetSimple++;
+                        }
+                        trajetComplexe[nbTrajetComplexe] = TrajetComplexe(trajetCompose,nbEtapes);
+                        Ajouter(trajetComplexe[nbTrajetComplexe]);
+                        nbTrajetComplexe++;
+                        delete[] trajetCompose;
                     }
                 }
+                else
+                    for (int a = 0; a < nbEtapes + 1; a++)
+                        getline(fichier, ligne);
             }
             break;
     }

@@ -38,7 +38,7 @@ public:
     /**Surcharge de l'opérateur =, pour gérer la deepcopy des chaines de caractères
     *
     */
-   void operator =(TrajetSimple const & trajet);
+   void operator = (TrajetSimple const & trajet);
 
 //-------------------------------------------- Constructeurs - destructeur
 
@@ -48,12 +48,12 @@ public:
     *@param arrivee Nom de la ville d'arrivée
     *@param moyen Nom du moyen de transport
     */
-    TrajetSimple (const char * depart,const char * arrivee, const char * moyen);
+    TrajetSimple(const char * depart,const char * arrivee, const char * moyen);
 
     /**Constructeur vide
     *
     */
-    TrajetSimple ();
+    TrajetSimple();
 
     /**Constructeur de copie
     *
@@ -63,7 +63,7 @@ public:
     /**Destructeur
     *
     */
-    virtual ~TrajetSimple ( );
+    virtual ~TrajetSimple();
 
 
 //------------------------------------------------------------------ PRIVE

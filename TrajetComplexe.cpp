@@ -42,8 +42,8 @@ void TrajetComplexe::operator = (TrajetComplexe const & trajet){
 //{
 //} //----- Fin de Méthode
 void const TrajetComplexe::Afficher(){
-  cout << "Trajet complexe de "<< depart << " vers " << arrivee << endl;
-  for(int i=0;i<nbTrajet;i++){
+  cout << "Trajet complexe de " << depart << " vers " << arrivee << endl;
+  for(int i = 0; i < nbTrajet; i++){
     cout << "\t";
     trajets[i]->Afficher();
   }
@@ -76,7 +76,7 @@ TrajetComplexe::~TrajetComplexe ( )
   // Algorithme :
   //
 {
-delete [] trajets;
+delete[] trajets;
 #ifdef MAP
   cout << "Appel au destructeur de <TrajetComplexe>" << endl;
 #endif

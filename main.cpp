@@ -11,11 +11,11 @@
 
 using namespace std;
 
-TrajetSimple trajetSimple[1000]; //Le tableau qui stocke les trajets simples créés
-int nbTrajetSimple = 0; //Nombre de trajets simples créés
-TrajetComplexe trajetComplexe[1000];//Tableau qui stocke les trajets complexes créés
-int nbTrajetComplexe = 0; //Nombre de trajets complexes créés
-Catalogue cat = Catalogue(); //Le catalogue qui référence les trajets
+TrajetSimple trajetSimple[1000]; // Le tableau qui stocke les trajets simples créés
+int nbTrajetSimple = 0; // Nombre de trajets simples créés
+TrajetComplexe trajetComplexe[1000]; // Tableau qui stocke les trajets complexes créés
+int nbTrajetComplexe = 0; // Nombre de trajets complexes créés
+Catalogue cat = Catalogue(); // Le catalogue qui référence les trajets
 
 /***Affiche les actions possibles à l'écran
 */
@@ -42,7 +42,7 @@ void AjoutSimple(int complexe, char* depart){
         cout << "Nous procédons à l'ajout d'un trajet simple" << endl;
     }
 
-    //On demande à l'utilisateur de rentrer toute les informations
+    // On demande à l'utilisateur de rentrer toutes les informations
     char* arrivee= new char[30];
     char* moyen= new char[30];
     if (complexe <= 0){
@@ -54,15 +54,15 @@ void AjoutSimple(int complexe, char* depart){
     cout << "Quel est le moyen de transport?" << endl;
     cin >> moyen;
 
-    //On crée un trajet Simple, que l'on stocke dans le tableau des trajets simples
+    // On crée un trajet Simple, que l'on stocke dans le tableau des trajets simples
     trajetSimple[nbTrajetSimple]= TrajetSimple(depart,arrivee,moyen);
 
-    //Si nous ne sommes pas dans un processus de trajet complexe, on ajoute ce trajet au catalogue
+    // Si nous ne sommes pas dans un processus de trajet complexe, on ajoute ce trajet au catalogue
     if (complexe == -1){
         cat.Ajouter(trajetSimple[nbTrajetSimple]);
-        cout << "Trajet simple ajouté au catalogue!" << endl;
+        cout << "Trajet simple ajouté au catalogue !" << endl;
     }
-    nbTrajetSimple ++;
+    nbTrajetSimple++;
 
     delete [] arrivee;
     delete [] moyen;
@@ -76,26 +76,26 @@ void AjoutComplexe(){
     cout << "Nous procédons à l'ajout d'un trajet complexe : " << endl;
     int nbTrajet = 0;
     while (nbTrajet == 0){
-        cout << "Votre trajet complexe est composé de combien de trajets simple (au moins 1)?" << endl;
+        cout << "Votre trajet complexe est composé de combien de trajets simple (au moins 1) ?" << endl;
         cin >> nbTrajet;
     }
-    Trajet * * trajet = new Trajet * [nbTrajet];
+    Trajet** trajet = new Trajet*[nbTrajet];
     cout << "Construction trajet par trajet : " << endl;
     char* villenoeud = new char[30];
     strcpy(villenoeud, "");
 
     //Construction des différents trajets simples
-    for (int i=0; i<nbTrajet; i++){
+    for (int i = 0; i < nbTrajet; i++){
         cout << "Pour le trajet numéro " << i+1 << " : "  << endl;
-        if (i!=0){
+        if (i != 0){
             cout << "Votre départ est : " << villenoeud << "." << endl;
         }
-        AjoutSimple(i,villenoeud);//On crée un trajet simple
-        trajet[i] = &(trajetSimple[nbTrajetSimple-1]); //On récupère le trajet simple créé
+        AjoutSimple(i,villenoeud); // On crée un trajet simple
+        trajet[i] = &(trajetSimple[nbTrajetSimple-1]); // On récupère le trajet simple créé
         strcpy(villenoeud,trajetSimple[nbTrajetSimple-1].getArrivee());
     }
-    trajetComplexe[nbTrajetComplexe] = TrajetComplexe(trajet,nbTrajet); //On stocke le trajet complexe
-    cat.Ajouter(trajetComplexe[nbTrajetComplexe]); //On met sa référence dans le catalogue
+    trajetComplexe[nbTrajetComplexe] = TrajetComplexe(trajet,nbTrajet); // On stocke le trajet complexe
+    cat.Ajouter(trajetComplexe[nbTrajetComplexe]); // On met sa référence dans le catalogue
     cout << "Trajet complexe ajouté au catalogue!" << endl;
     nbTrajetComplexe++;
     delete [] villenoeud;

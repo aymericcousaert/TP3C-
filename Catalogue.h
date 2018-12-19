@@ -72,7 +72,7 @@ protected:
     Trajet ** trajet;
     /** Le nombre de trajets enregistrés
     */
-    int nbTrajets =0;
+    int nbTrajets = 0;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Catalogue>
