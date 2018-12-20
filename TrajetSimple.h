@@ -32,7 +32,10 @@ public:
     /*** Affiche le trajet en console
     *
     */
-    virtual const void  Afficher();
+    const void  Afficher();
+    bool estComplexe() const;
+    int getNbEtapes() const;
+    char* getMoyen() const;
 
 //-------------------------------------------------- Surcharge d'opérateurs
     /**Surcharge de l'opérateur =, pour gérer la deepcopy des chaines de caractères

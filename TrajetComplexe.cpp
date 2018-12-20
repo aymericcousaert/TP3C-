@@ -50,6 +50,15 @@ void const TrajetComplexe::Afficher(){
   //cout << "Fin du trajet complexe" << endl;
 }
 
+bool TrajetComplexe::estComplexe() const {
+    return true;
+}
+
+int TrajetComplexe::getNbEtapes() const {
+    return nbTrajet;
+}
+
+
 
 //-------------------------------------------- Constructeurs - destructeur
 

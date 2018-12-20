@@ -295,7 +295,73 @@ void Catalogue::Charger() {
 }
 
 void Catalogue::Sauvegarder() {
-
+    string nomFichier;
+    int typeSelection;
+    cout << "Saisir le nom du fichier texte avec l'extension .txt" << endl;
+    cin >> nomFichier;
+    ofstream fichier(nomFichier, ios::trunc);
+    cout << "Choisir type de selection" << endl;
+    cout << "1 - Selection totale" << endl;
+    cout << "2 - Selection selon le type de trajet" << endl;
+    cout << "3 - Selection selon le départ ou l'arrivée" << endl;
+    cout << "4 - Selection selon un intervalle" << endl;
+    cin >> typeSelection;
+    
+    int cas2 = 0; // 1 : On selectionne les trajets simples  2 : On selectionne les trajets complexes
+    int cas3 = 0; // 1 : On selectionne les trajets selon le départ 2 : On selectionne les trajets selon l'arrivee
+    string cas3ville;
+    int cas4inf = 1;
+    int cas4sup = nbTrajets;
+    fichier << nbTrajets << endl;
+    switch (typeSelection) {
+        case 1:
+            for (int i = 0; i < nbTrajets; i++)
+            {
+                if (!trajet[i]->estComplexe())
+                {
+                    fichier << "TRAJET " << "SIMPLE " << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " 1" << endl;
+                    fichier << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " " << trajet[i]->getMoyen() << endl;
+                }
+                else
+                {
+                    fichier << "TRAJET " << "COMPLEXE " << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " " << trajet[i]->getNbEtapes() << endl;
+                    
+                    
+                    
+                    
+                }
+            }
+            
+            
+            break;
+        case 2:
+            cout << "Saisir le type de trajet (1 - Trajet Simple, 2 - Trajet Complexe)" << endl;
+            cin >> cas2;
+            break;
+        case 3:
+            cout << "Choisir le départ ou l'arrivée (1 - Départ, 2 - Arrivée)" << endl;
+            cin >> cas3;
+            cout << "Saisir le nom de la ville" << endl;
+            cin >> cas3ville;
+            break;
+        case 4:
+            do
+            {
+                cout << "Les bornes de l'intervalle doivent être comprises entre 1 et " << nbTrajets << endl;
+                cout << "Saisir la borne inférieure de l'intervalle" << endl;
+                cin >> cas4inf;
+                cout << "Saisir la borne supérieure de l'intervalle" << endl;
+                cin >> cas4sup;
+            } while ( !(cas4sup >= cas4inf && cas4sup <= nbTrajets && cas4inf > 0) );
+            
+            break;
+        default:
+            cout << "Indice de Selection incorrect" << endl;
+    }
+    fichier.close();
+    if (typeSelection == 1 || typeSelection == 2 || typeSelection == 3 || typeSelection == 4)
+        cout << "Le catalogue a été sauvegardé dans le fichier " << nomFichier << endl;
+    
 }
 
 

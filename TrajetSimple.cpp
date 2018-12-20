@@ -34,6 +34,17 @@ const void TrajetSimple::Afficher ()
     
 }
 
+bool TrajetSimple::estComplexe() const {
+    return false;
+}
+
+int TrajetSimple::getNbEtapes() const {
+    return 1;
+}
+
+char* TrajetSimple::getMoyen() const {
+    return moyen;
+}
 
 //------------------------------------------------- Surcharge d'opérateurs
 void TrajetSimple::operator = (TrajetSimple const & trajet){

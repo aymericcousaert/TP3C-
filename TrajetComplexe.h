@@ -25,62 +25,66 @@ e-mail               : $EMAIL$
 
 class TrajetComplexe : public Trajet
 {
-  //----------------------------------------------------------------- PUBLIC
+      //----------------------------------------------------------------- PUBLIC
 
 public:
-  //----------------------------------------------------- Méthodes publiques
+    //----------------------------------------------------- Méthodes publiques
 
-  /** Affiche le trajet
-  */
-  virtual const void Afficher();
-
-  /**Renvoie si le trajet complexe est correctement constitué, c'est à dire arrivée_i = depart_i+1
-  */
-  bool EstValide();
-
+    /** Affiche le trajet
+    */
+    const void Afficher();
+    bool estComplexe() const;
+    int getNbEtapes() const;
+    
 
 
-  //------------------------------------------------- Surcharge d'opérateurs
-  /** Surchage de l'opérateur d'affectation
-  *
-  *
-  */
-  void operator = (const TrajetComplexe & trajet);
-
-  //-------------------------------------------- Constructeurs - destructeur
-
-  /** Constructeur vide
-  */
-  TrajetComplexe ();
-
-  /** Constructeur de Trajet Complexe, prend en paramètre les pointeurs des trajets qui composent ce trajet, et le nombre de trajets
-  *
-  *Attention, il n'y a pas de deepcopy, donc les trajets doivent être stockés jusqu'à la fin du programme.
-  *
-  *@param trajets Tableau des pointeurs des trajets qui composent ce trajet
-  *@param nbTrajets le nombre de trajets qui composent le trajet complexe
-  */
-  TrajetComplexe (Trajet** trajets,int nbTrajets);
-
-  /***Destructeur de TrajetComplexe, détruit le tableau de trajets, mais pas les trajets !
-  *
-  */
-  virtual ~TrajetComplexe ( );
+    /**Renvoie si le trajet complexe est correctement constitué, c'est à dire arrivée_i = depart_i+1
+    */
+    bool EstValide();
 
 
 
-  //------------------------------------------------------------------ PRIVE
+    //------------------------------------------------- Surcharge d'opérateurs
+    /** Surchage de l'opérateur d'affectation
+    *
+    *
+    */
+    void operator = (const TrajetComplexe & trajet);
+
+    //-------------------------------------------- Constructeurs - destructeur
+
+    /** Constructeur vide
+    */
+    TrajetComplexe ();
+
+    /** Constructeur de Trajet Complexe, prend en paramètre les pointeurs des trajets qui composent ce trajet, et le nombre de trajets
+    *
+    *Attention, il n'y a pas de deepcopy, donc les trajets doivent être stockés jusqu'à la fin du programme.
+    *
+    *@param trajets Tableau des pointeurs des trajets qui composent ce trajet
+    *@param nbTrajets le nombre de trajets qui composent le trajet complexe
+    */
+    TrajetComplexe (Trajet** trajets,int nbTrajets);
+
+    /***Destructeur de TrajetComplexe, détruit le tableau de trajets, mais pas les trajets !
+    *
+    */
+    virtual ~TrajetComplexe ( );
+
+
+
+    //------------------------------------------------------------------ PRIVE
 protected:
-  //----------------------------------------------------- Méthodes protégées
+    //----------------------------------------------------- Méthodes protégées
 
-  //----------------------------------------------------- Attributs protégés
-  /** Un tableau de pointeurs vers les trajets qui composent ce trajet complexe
-  */
-  Trajet** trajets;
+    //----------------------------------------------------- Attributs protégés
+    /** Un tableau de pointeurs vers les trajets qui composent ce trajet complexe
+    */
+    Trajet** trajets;
 
-  /** Le nombre de trajets qui composent le trajet complexe
-  */
-  int nbTrajet;
+    /** Le nombre de trajets qui composent le trajet complexe
+    */
+    int nbTrajet;
 };
 
 //-------------------------------- Autres définitions dépendantes de <TrajetComplexe>

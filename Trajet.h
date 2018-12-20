@@ -31,6 +31,10 @@ public:
     /** Affiche le trajet dans la console
     */
     virtual const void Afficher();
+    virtual bool estComplexe() const = 0;
+    virtual int getNbEtapes() const = 0;
+    virtual char* getMoyen() const;
+    
 
 //-------------------------------------------- Constructeurs - destructeur
     /**Constructeur de copie de Trajet
