@@ -30,11 +30,16 @@ const void Trajet::Afficher ()
 }
 
 const char * Trajet::getDepart(){
-  return depart;
+    return depart;
 }
 
 const char * Trajet::getArrivee(){
-  return arrivee;
+    return arrivee;
+}
+
+const char* Trajet::getMoyen() const {
+    string temp = "NONDEFINI";
+    return temp.c_str();
 }
 
 
@@ -53,10 +58,10 @@ Trajet::Trajet ( const Trajet & unTrajet )
 } //----- Fin de Xxx (constructeur de copie)
 
 Trajet::Trajet(){
-  depart = new char[1];
-  arrivee = new char[1];
-  strcpy(depart,"");
-  strcpy(arrivee,"");
+    depart = new char[1];
+    arrivee = new char[1];
+    strcpy(depart,"");
+    strcpy(arrivee,"");
 }
 
 

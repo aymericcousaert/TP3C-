@@ -33,7 +33,8 @@ public:
     virtual const void Afficher();
     virtual bool estComplexe() const = 0;
     virtual int getNbEtapes() const = 0;
-    virtual char* getMoyen() const;
+    virtual const char* getMoyen() const;
+    virtual Trajet** getTrajet() = 0;
     
 
 //-------------------------------------------- Constructeurs - destructeur

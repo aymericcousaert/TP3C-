@@ -58,6 +58,9 @@ int TrajetComplexe::getNbEtapes() const {
     return nbTrajet;
 }
 
+Trajet** TrajetComplexe::getTrajet() {
+    return trajets;
+}
 
 
 //-------------------------------------------- Constructeurs - destructeur

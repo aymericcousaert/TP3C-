@@ -42,8 +42,14 @@ int TrajetSimple::getNbEtapes() const {
     return 1;
 }
 
-char* TrajetSimple::getMoyen() const {
+const char* TrajetSimple::getMoyen() const {
     return moyen;
+}
+
+Trajet** TrajetSimple::getTrajet(){
+    Trajet** temp = nullptr;
+    *temp = this;
+    return temp;
 }
 
 //------------------------------------------------- Surcharge d'opérateurs

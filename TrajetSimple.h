@@ -35,7 +35,8 @@ public:
     const void  Afficher();
     bool estComplexe() const;
     int getNbEtapes() const;
-    char* getMoyen() const;
+    const char* getMoyen() const;
+    Trajet** getTrajet();
 
 //-------------------------------------------------- Surcharge d'opérateurs
     /**Surcharge de l'opérateur =, pour gérer la deepcopy des chaines de caractères

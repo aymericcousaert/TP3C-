@@ -16,6 +16,8 @@
 #include <string.h>
 #include <fstream>
 
+
+
 using namespace std;
 
 
@@ -312,7 +314,9 @@ void Catalogue::Sauvegarder() {
     string cas3ville;
     int cas4inf = 1;
     int cas4sup = nbTrajets;
-    fichier << nbTrajets << endl;
+    fichier << endl;
+    fichier << endl;
+    int compteur = 0;
     switch (typeSelection) {
         case 1:
             for (int i = 0; i < nbTrajets; i++)
@@ -321,28 +325,75 @@ void Catalogue::Sauvegarder() {
                 {
                     fichier << "TRAJET " << "SIMPLE " << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " 1" << endl;
                     fichier << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " " << trajet[i]->getMoyen() << endl;
+                    compteur++;
                 }
                 else
                 {
+                    Trajet** temp = trajet[i]->getTrajet();
                     fichier << "TRAJET " << "COMPLEXE " << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " " << trajet[i]->getNbEtapes() << endl;
-                    
-                    
-                    
-                    
+                    for (int j = 0; j < trajet[i]->getNbEtapes(); j++)
+                        fichier << temp[j]->getDepart() << " " << temp[j]->getArrivee() << " " << temp[j]->getMoyen() << endl;
+                    compteur++;
                 }
             }
-            
-            
             break;
         case 2:
             cout << "Saisir le type de trajet (1 - Trajet Simple, 2 - Trajet Complexe)" << endl;
             cin >> cas2;
+            for (int i = 0; i < nbTrajets; i++)
+            {
+                if (!trajet[i]->estComplexe() && cas2 == 1)
+                {
+                    fichier << "TRAJET " << "SIMPLE " << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " 1" << endl;
+                    fichier << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " " << trajet[i]->getMoyen() << endl;
+                    compteur++;
+                }
+                else if (trajet[i]->estComplexe() && cas2 == 2)
+                {
+                    Trajet** temp = trajet[i]->getTrajet();
+                    fichier << "TRAJET " << "COMPLEXE " << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " " << trajet[i]->getNbEtapes() << endl;
+                    for (int j = 0; j < trajet[i]->getNbEtapes(); j++)
+                        fichier << temp[j]->getDepart() << " " << temp[j]->getArrivee() << " " << temp[j]->getMoyen() << endl;
+                    compteur++;
+                }
+            }
             break;
         case 3:
             cout << "Choisir le départ ou l'arrivée (1 - Départ, 2 - Arrivée)" << endl;
             cin >> cas3;
             cout << "Saisir le nom de la ville" << endl;
             cin >> cas3ville;
+            for (int i = 0; i < nbTrajets; i++)
+            {
+                if (!trajet[i]->estComplexe() && cas3 == 1 && strcmp(cas3ville.c_str(),trajet[i]->getDepart()) == 0)
+                {
+                    fichier << "TRAJET " << "SIMPLE " << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " 1" << endl;
+                    fichier << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " " << trajet[i]->getMoyen() << endl;
+                    compteur++;
+                }
+                else if (trajet[i]->estComplexe() && cas3 == 1 && strcmp(cas3ville.c_str(),trajet[i]->getDepart()) == 0)
+                {
+                    Trajet** temp = trajet[i]->getTrajet();
+                    fichier << "TRAJET " << "COMPLEXE " << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " " << trajet[i]->getNbEtapes() << endl;
+                    for (int j = 0; j < trajet[i]->getNbEtapes(); j++)
+                        fichier << temp[j]->getDepart() << " " << temp[j]->getArrivee() << " " << temp[j]->getMoyen() << endl;
+                    compteur++;
+                }
+                else if (!trajet[i]->estComplexe() && cas3 == 2 && strcmp(cas3ville.c_str(),trajet[i]->getArrivee()) == 0)
+                {
+                    fichier << "TRAJET " << "SIMPLE " << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " 1" << endl;
+                    fichier << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " " << trajet[i]->getMoyen() << endl;
+                    compteur++;
+                }
+                else if (trajet[i]->estComplexe() && cas2 == 2 && strcmp(cas3ville.c_str(),trajet[i]->getArrivee()) == 0)
+                {
+                    Trajet** temp = trajet[i]->getTrajet();
+                    fichier << "TRAJET " << "COMPLEXE " << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " " << trajet[i]->getNbEtapes() << endl;
+                    for (int j = 0; j < trajet[i]->getNbEtapes(); j++)
+                        fichier << temp[j]->getDepart() << " " << temp[j]->getArrivee() << " " << temp[j]->getMoyen() << endl;
+                    compteur++;
+                }
+            }
             break;
         case 4:
             do
@@ -354,10 +405,29 @@ void Catalogue::Sauvegarder() {
                 cin >> cas4sup;
             } while ( !(cas4sup >= cas4inf && cas4sup <= nbTrajets && cas4inf > 0) );
             
+            for (int i = 0; i < nbTrajets; i++)
+            {
+                if (!trajet[i]->estComplexe() && i >= cas4inf - 1 && i <= cas4sup - 1)
+                {
+                    fichier << "TRAJET " << "SIMPLE " << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " 1" << endl;
+                    fichier << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " " << trajet[i]->getMoyen() << endl;
+                    compteur++;
+                }
+                else if (trajet[i]->estComplexe() && i >= cas4inf - 1 && i <= cas4sup - 1)
+                {
+                    Trajet** temp = trajet[i]->getTrajet();
+                    fichier << "TRAJET " << "COMPLEXE " << trajet[i]->getDepart() << " " << trajet[i]->getArrivee() << " " << trajet[i]->getNbEtapes() << endl;
+                    for (int j = 0; j < trajet[i]->getNbEtapes(); j++)
+                        fichier << temp[j]->getDepart() << " " << temp[j]->getArrivee() << " " << temp[j]->getMoyen() << endl;
+                    compteur++;
+                }
+            }
             break;
         default:
             cout << "Indice de Selection incorrect" << endl;
     }
+    fichier.seekp(0,ios::beg);
+    fichier << compteur << endl;
     fichier.close();
     if (typeSelection == 1 || typeSelection == 2 || typeSelection == 3 || typeSelection == 4)
         cout << "Le catalogue a été sauvegardé dans le fichier " << nomFichier << endl;

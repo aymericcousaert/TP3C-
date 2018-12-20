@@ -35,6 +35,7 @@ public:
     const void Afficher();
     bool estComplexe() const;
     int getNbEtapes() const;
+    Trajet** getTrajet();
     
 
 
