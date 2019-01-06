@@ -22,14 +22,14 @@ using namespace std;
 
 //----------------------------------------------------------------- PUBLIC
 void TrajetComplexe::operator = (TrajetComplexe const & trajet){
-	delete depart;
+	delete[] depart;
 	depart = new char[strlen(trajet.depart)+1];
 	strcpy(depart,trajet.depart);
-	delete arrivee;
+	delete[] arrivee;
 	arrivee = new char[strlen(trajet.arrivee)+1];
 	strcpy(arrivee,trajet.arrivee);
 	nbTrajet = trajet.nbTrajet;
-	delete [] trajets;
+	delete[] trajets;
 	trajets = new Trajet * [nbTrajet];
 	for(int i=0;i<nbTrajet;i++){
         trajets[i] = trajet.trajets[i];
@@ -41,24 +41,28 @@ void TrajetComplexe::operator = (TrajetComplexe const & trajet){
 //
 //{
 //} //----- Fin de Méthode
-void const TrajetComplexe::Afficher(){
-  cout << "Trajet complexe de " << depart << " vers " << arrivee << endl;
-  for(int i = 0; i < nbTrajet; i++){
-    cout << "\t";
-    trajets[i]->Afficher();
-  }
-  //cout << "Fin du trajet complexe" << endl;
+void const TrajetComplexe::Afficher()
+{
+    cout << "Trajet complexe de " << depart << " vers " << arrivee << endl;
+    for(int i = 0; i < nbTrajet; i++)
+    {
+        cout << "\t";
+        trajets[i]->Afficher();
+    }
 }
 
-bool TrajetComplexe::estComplexe() const {
+bool TrajetComplexe::estComplexe() const
+{
     return true;
 }
 
-int TrajetComplexe::getNbEtapes() const {
+int TrajetComplexe::getNbEtapes() const
+{
     return nbTrajet;
 }
 
-Trajet** TrajetComplexe::getTrajet() {
+Trajet** TrajetComplexe::getTrajet()
+{
     return trajets;
 }
 
@@ -68,31 +72,31 @@ Trajet** TrajetComplexe::getTrajet() {
 TrajetComplexe::TrajetComplexe(Trajet ** desTrajets,int nbTrajet):
 	Trajet(desTrajets[0]->getDepart(),desTrajets[nbTrajet-1]->getArrivee())
 {
-  this->nbTrajet = nbTrajet;
-  this->trajets = new Trajet * [nbTrajet];
-  for(int i=0;i<nbTrajet;i++){
-    this->trajets[i] = desTrajets[i];
-  }
-#ifdef MAP
-  cout << "Appel au constructeur de <TrajetComplexe>" << endl;
-#endif
-} //----- Fin de TrajetComplexe
+    this->nbTrajet = nbTrajet;
+    this->trajets = new Trajet * [nbTrajet];
+    for (int i=0;i<nbTrajet;i++)
+    {
+        this->trajets[i] = desTrajets[i];
+    }
+    #ifdef MAP
+    cout << "Appel au constructeur de <TrajetComplexe>" << endl;
+    #endif
+}
 
-TrajetComplexe::TrajetComplexe():Trajet(){
+TrajetComplexe::TrajetComplexe():Trajet()
+{
     #ifdef MAP
     cout << "Appel au constructeur de <TrajetSimple>" << endl;
     #endif
 }
 
 TrajetComplexe::~TrajetComplexe ( )
-  // Algorithme :
-  //
 {
-delete[] trajets;
-#ifdef MAP
-  cout << "Appel au destructeur de <TrajetComplexe>" << endl;
-#endif
-} //----- Fin de ~TrajetComplexe
+    delete[] trajets;
+    #ifdef MAP
+      cout << "Appel au destructeur de <TrajetComplexe>" << endl;
+    #endif
+}
 
 
 //------------------------------------------------------------------ PRIVE
